@@ -17,6 +17,8 @@ public class Movement : MonoBehaviour
     public Transform _groundCheck;
     public LayerMask _whatIsGround;
 
+    public Animator _animator;
+
 
     private void Update() {
         _isGrounded = Physics2D.OverlapCircle(_groundCheck.position, 0.1f, _whatIsGround);
@@ -31,6 +33,8 @@ public class Movement : MonoBehaviour
         }
 
         _moveDir.x = Input.GetAxis("Horizontal");
+        _animator.SetFloat("Move", Mathf.Abs(_moveDir.x));
+
         _velocity.y += _gravity * Time.deltaTime;
         _playerMovement = new Vector2(_moveDir.x * (_speed * 10f), _velocity.y);
 
