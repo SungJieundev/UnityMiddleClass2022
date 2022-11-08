@@ -11,6 +11,9 @@ public class TetrisBlock : MonoBehaviour
     public static int width = 10;
     private static Transform[,] grid = new Transform[width, height];
 
+
+    public GameObject gameOverPanel;
+
     private void Update() {
 
         if(Input.GetKeyDown(KeyCode.LeftArrow)){
@@ -50,8 +53,16 @@ public class TetrisBlock : MonoBehaviour
 
             if(!ValidMove()){
 
+                if(fallTime >= 0.75f){
+
+                    GameOver();
+                    return;
+                }
+
                 transform.position -= new Vector3(0, -1, 0);
                 AddToGrid();
+
+                CheckForLines();
 
                 this.enabled = false;
                 FindObjectOfType<SpawnTetromino>().NewTetromino();
@@ -91,5 +102,60 @@ public class TetrisBlock : MonoBehaviour
 
             grid[roundedX, roundedY] = children;
         }
+    }
+
+    // 체크라인 -> 한줄의 그리드가 채워졌는지 확인 -> 라인삭제 -> 라인 내려보냄
+    void CheckForLines(){
+
+        for(int i = height - 1; i >= 0; i--){
+
+            if(hasLine(i)){
+
+                DeleteLines(i);
+                RowDown(i);
+            }
+        }
+    }
+
+    bool hasLine(int i){
+
+        for(int j = 0; j < width; j++){
+
+            if(grid[j, i] == null){
+
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void DeleteLines(int i){
+        
+        for(int j = 0; j < width; j++){
+
+            Destroy(grid[j, i].gameObject);
+            grid[j, i] = null;
+            SpawnTetromino.score++;
+        }
+    }
+
+    void RowDown(int i){
+
+        for(int y = i; y < height; y++){
+
+            for(int j = 0; j < width; j++){
+
+                if(grid[j, y] != null){
+
+                    grid[j, y - 1] = grid[j, y];
+                    grid[j, y] = null;
+                    grid[j, y - 1].transform.position -= new Vector3(0, 1, 0);
+                }
+            }
+        }
+    }
+
+    void GameOver(){
+        gameOverPanel.SetActive(true);
     }
 }
