@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/BasicFusionScene.unity
+    guid: dadd58bc171f47148a3f4a9dde167274
+  - enabled: 1
     path: Assets/Scenes/Lobby.unity
     guid: c6955393180fdd34fa6abeca1da2b35a
   - enabled: 1
