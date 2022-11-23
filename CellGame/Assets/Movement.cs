@@ -16,7 +16,10 @@ public class Movement : MonoBehaviour
     {
         Vector2 input = Input.mousePosition;
         Vector3 worldPos = cam.ScreenToWorldPoint(input);
-        
-        transform.position = Vector3.MoveTowards(transform.position, worldPos, speed * Time.deltaTime);
+
+        Vector3 nPos = Vector3.MoveTowards(transform.position, worldPos, speed * Time.deltaTime);
+
+        nPos.z = transform.position.z;
+        transform.position = nPos;
     }
 }
