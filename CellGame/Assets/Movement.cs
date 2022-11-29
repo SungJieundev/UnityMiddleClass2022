@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class Movement : MonoBehaviour
 {
     public Camera cam;
     public float speed;
+    public Text NICK;
+    //public pH
     void Start()
     {
         
