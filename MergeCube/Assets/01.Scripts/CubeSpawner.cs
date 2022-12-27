@@ -81,4 +81,19 @@ public class CubeSpawner : MonoBehaviour
 
         return cube;
     }
+
+    public Cube SpawnRandom(){
+
+        return Spawn(GenerateRandomNumber(), defaultSpawnPos);
+    }
+
+    public void DestroyCube(Cube cube){
+
+        cube.cubeRigidbody.velocity = Vector3.zero;
+        cube.cubeRigidbody.angularVelocity = Vector3.zero;
+        cube.transform.rotation = Quaternion.identity;
+        cube.gameObject.SetActive(false);
+
+        cubesQueue.Enqueue(cube);
+    }
 }

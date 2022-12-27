@@ -4,8 +4,11 @@ using UnityEngine;
 using TMPro;
 
 public class Cube : MonoBehaviour
-{
+{   
+    static int staticId = 0;
     [SerializeField] private TMP_Text[] numberList;
+
+    public int cubeId;
     public Color cubeColor;
     public int cubeNumber;
     public Rigidbody cubeRigidbody;
@@ -13,12 +16,14 @@ public class Cube : MonoBehaviour
 
     private void Awake() {
         
+        cubeId = staticId++;
         meshRenderer = GetComponent<MeshRenderer>();
         cubeRigidbody = GetComponent<Rigidbody>();
     }
 
     public void SetColor(Color color){
 
+        cubeColor = color;
         meshRenderer.material.color = color;
     }
 

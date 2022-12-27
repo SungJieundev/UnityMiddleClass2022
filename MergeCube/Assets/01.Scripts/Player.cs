@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
 
     private void Start() {
 
+        SpawnCube();
+
         touchSlider.OnPointerDownEvent += OnPointerDown;
         touchSlider.OnPointerUpEvent += OnPointerUp;
         touchSlider.OnPointerDragEvent += OnPointerDrag;
@@ -38,7 +40,9 @@ public class Player : MonoBehaviour
         if(isPointerDown) isPointerDown = false;
 
         // cube 발사 
-        mainCube.cubeRigidbody.AddForce(Vector3.forward * pushForce);
+        mainCube.cubeRigidbody.AddForce(Vector3.forward * pushForce, ForceMode.Impulse);
+
+        Invoke("SpawnNewCube", 0.3f);
     }
     private void OnPointerDrag(float x){
 
@@ -54,5 +58,16 @@ public class Player : MonoBehaviour
         touchSlider.OnPointerDownEvent -= OnPointerDown;
         touchSlider.OnPointerUpEvent -= OnPointerUp;
         touchSlider.OnPointerDragEvent -= OnPointerDrag;
+    }
+
+    private void SpawnCube(){
+
+        mainCube = CubeSpawner.Instance.SpawnRandom();
+        cubePos = mainCube.transform.position;
+        
+    }
+
+    private void SpawnNewCube(){
+        SpawnCube();
     }
 }
